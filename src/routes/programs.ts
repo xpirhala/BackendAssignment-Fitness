@@ -5,21 +5,17 @@ import {
 	NextFunction
 } from 'express'
 
-import { models } from '../db'
-
 const router = Router()
 
-const {
-	Program
-} = models
+import { ProgramService } from '../services/program'
+const programService = new ProgramService();
+
+
 
 export default () => {
-	router.get('/', async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-		const programs = await Program.findAll()
-		return res.json({
-			data: programs,
-			message: 'List of programs'
-		})
+	router.get('/', async (_req: Request, res: Response, _next: NextFunction): Promise<void> => {
+		const result = await programService.getAllPrograms();
+		res.json(result);
 	})
 
 	return router

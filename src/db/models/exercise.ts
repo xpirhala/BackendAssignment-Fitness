@@ -1,17 +1,18 @@
 import { Sequelize, DataTypes, Model } from 'sequelize'
-import { EXERCISE_DIFFICULTY } from '../utils/enums'
-import { ExerciseModel } from './exercise'
+import { ProgramModel } from './program'
 
-export interface ProgramModel extends Model {
+import { EXERCISE_DIFFICULTY } from '../../utils/enums'
+
+export interface ExerciseModel extends Model {
 	id: number
 	difficulty: EXERCISE_DIFFICULTY
 	name: String
 
-	exercises: ExerciseModel[]
+	program: ProgramModel
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
-	const ProgramModelCtor = sequelize.define<ProgramModel>(
+	const ExerciseModelCtor = sequelize.define<ExerciseModel>(
 		modelName,
 		{
 			id: {
@@ -20,6 +21,9 @@ export default (sequelize: Sequelize, modelName: string) => {
 				allowNull: false,
 				autoIncrement: true
 			},
+			difficulty: {
+				type: DataTypes.ENUM(...Object.values(EXERCISE_DIFFICULTY))
+			},
 			name: {
 				type: DataTypes.STRING(200),
 			}
@@ -27,18 +31,18 @@ export default (sequelize: Sequelize, modelName: string) => {
 		{
 			paranoid: true,
 			timestamps: true,
-			tableName: 'programs'
+			tableName: 'exercises'
 		}
 	)
 
-	ProgramModelCtor.associate = (models) => {
-		ProgramModelCtor.hasMany(models.Exercise, {
+	ExerciseModelCtor.associate = (models) => {
+		ExerciseModelCtor.belongsTo(models.Program, {
 			foreignKey: {
 				name: 'programID',
 				allowNull: false
-			}
+			},
 		})
 	}
 
-	return ProgramModelCtor
+	return ExerciseModelCtor
 }

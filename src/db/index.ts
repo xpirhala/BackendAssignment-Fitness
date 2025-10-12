@@ -3,8 +3,8 @@ import { Sequelize } from 'sequelize'
 
 import 'dotenv/config';
 
-import defineExercise from './exercise'
-import defineProgram from './program'
+import defineExercise from './models/exercise'
+import defineProgram from './models/program'
 
 const sequelize: Sequelize = new Sequelize(process.env.DB_NAME || 'fitness_app', process.env.DB_USER , process.env.DB_PASSWORD , {
 	host: process.env.HOST || 'localhost',
