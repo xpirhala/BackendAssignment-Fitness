@@ -73,6 +73,13 @@ export default (sequelize: Sequelize, modelName: string) => {
                 allowNull: false,
             },
             targetKey: 'enum',
+        });
+
+        UserModelCtor.hasMany(models.TrackingExercise, {
+            foreignKey: {
+                name: 'userID',
+                allowNull: false,
+            }
         })
     }
 

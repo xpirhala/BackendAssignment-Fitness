@@ -41,6 +41,13 @@ export default (sequelize: Sequelize, modelName: string) => {
 				name: 'programID',
 				allowNull: false
 			},
+		});
+
+		ExerciseModelCtor.hasMany(models.TrackingExercise, {
+			foreignKey: {
+				name: 'exerciseID',
+				allowNull: false
+			},
 		})
 	}
 
