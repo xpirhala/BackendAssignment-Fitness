@@ -16,9 +16,12 @@
   "author": "richard.solar@goodrequest.com",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cross-env": "^7.0.2",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.0",
     "sequelize": "^6.37.7",
     "ts-node": "^10.9.2",

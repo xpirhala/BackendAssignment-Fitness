@@ -4,7 +4,7 @@ import {
 	Response,
 	NextFunction
 } from 'express'
-
+import { authenticate } from '../middlewares/authMiddleware'
 const router = Router()
 
 import { ProgramService } from '../services/program'
@@ -13,7 +13,7 @@ const programService = new ProgramService();
 
 
 export default () => {
-	router.get('/', async (_req: Request, res: Response, _next: NextFunction): Promise<void> => {
+	router.get('/', authenticate, async (req: Request, res: Response): Promise<any> => {
 		const result = await programService.getAllPrograms();
 		res.json(result);
 	})
