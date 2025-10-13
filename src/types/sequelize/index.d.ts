@@ -8,7 +8,7 @@ import {
 	Attributes
 } from 'sequelize/types/model'
 
-import { Models } from '../../db'
+import { Models } from '../../db/models'
 
 declare module 'sequelize' {
 	interface IModels extends Models {}

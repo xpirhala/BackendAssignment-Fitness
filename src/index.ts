@@ -1,7 +1,7 @@
 import http from 'http'
 import express from 'express'
 
-import { sequelize } from './db'
+import { sequelize } from './db/models'
 import ProgramRouter from './routes/programs'
 import ExerciseRouter from './routes/exercises'
 

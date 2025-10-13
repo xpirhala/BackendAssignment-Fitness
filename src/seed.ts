@@ -1,14 +1,15 @@
-import { models, sequelize } from './db/index'
+import { models, sequelize } from './db/models/index'
 import { EXERCISE_DIFFICULTY } from './utils/enums'
 
 const {
 	Exercise,
 	Program,
+	RoleEnum,
+	User
 } = models
 
 const seedDB = async () => {
 	await sequelize.sync({ force: true })
-
 	await Program.bulkCreate([{
 		name: 'Program 1'
 	}, {

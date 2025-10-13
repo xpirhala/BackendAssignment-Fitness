@@ -5,7 +5,7 @@ import {
 	NextFunction
 } from 'express'
 
-import { models } from '../db'
+import { models } from '../db/models'
 
 const router = Router()
 

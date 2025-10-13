@@ -1,4 +1,4 @@
-import { models } from '../index'
+import { models } from '../models/index'
 
 const { Exercise, Program } = models
 

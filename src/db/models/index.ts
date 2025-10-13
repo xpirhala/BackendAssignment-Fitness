@@ -3,8 +3,10 @@ import { Sequelize } from 'sequelize'
 
 import 'dotenv/config';
 
-import defineExercise from './models/exercise'
-import defineProgram from './models/program'
+import defineExercise from './exercise'
+import defineProgram from './program'
+import defineRoleEnum from './roleEnum'
+import defineUser from './user'
 
 const sequelize: Sequelize = new Sequelize(process.env.DB_NAME || 'fitness_app', process.env.DB_USER , process.env.DB_PASSWORD , {
 	host: process.env.HOST || 'localhost',
@@ -20,10 +22,14 @@ sequelize.authenticate().catch((e: any) => console.error(`Unable to connect to t
 
 const Exercise = defineExercise(sequelize, 'exercise')
 const Program = defineProgram(sequelize, 'program')
+const RoleEnum = defineRoleEnum(sequelize, 'roleEnum')
+const User = defineUser(sequelize, 'user')
 
 const models = {
 	Exercise,
-	Program
+	Program,
+	RoleEnum,
+	User
 }
 type Models = typeof models
 
