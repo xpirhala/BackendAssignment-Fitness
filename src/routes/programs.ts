@@ -4,11 +4,10 @@ import {
 	Response,
 	NextFunction
 } from 'express'
-import { authenticate } from '../middlewares/authMiddleware'
+import { authenticate,authorizeRoles } from '../middlewares/authMiddleware'
 const router = Router()
 
 import { ProgramService } from '../services/program'
-import { authorizeRoles } from '../utils/jwt';
 import { ROLE_TYPE } from '../utils/enums';
 
 const programService = new ProgramService();
