@@ -15,6 +15,3 @@ export function verifyToken(token: string) {
   return jwt.verify(token, JWT_SECRET);
 }
 
-export function isAdmin(token: string) {
-  return jwt.verify(token, JWT_SECRET);
-}
