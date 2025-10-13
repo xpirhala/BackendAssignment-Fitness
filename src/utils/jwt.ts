@@ -14,3 +14,17 @@ export function generateToken(user: { id: number; email: string; role: string })
 export function verifyToken(token: string) {
   return jwt.verify(token, JWT_SECRET);
 }
+
+export function isAdmin(token: string) {
+  return jwt.verify(token, JWT_SECRET);
+}
+
+export function authorizeRoles(...allowedRoles: string[]) {
+  return (req: any, res: any, next: any) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ error: "Forbidden: insufficient role" });
+    }
+    next();
+  };
+}
+
