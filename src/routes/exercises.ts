@@ -12,12 +12,12 @@ const router = Router()
 
 
 export default () => {
-	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.ADMIN,ROLE_TYPE.USER),async (_req: Request, res: Response, _next: NextFunction): Promise<void> => {
+	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.ADMIN,ROLE_TYPE.USER),async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		const result = await exerciseService.getAllExercises();
 		res.json(result);
 	})
 
-	router.post('/create', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateCreateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+	router.post('/create', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateCreateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		// Logic to add a new exercise
 		let result;
 		try {
@@ -29,7 +29,7 @@ export default () => {
 		res.status(201).json({ result: result, message: req.t('exercisesCreate') });
 	})
 
-	router.put('/update', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateUpdateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+	router.put('/update', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateUpdateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		// Logic to update an existing exercise
 		let result;
 		try {
@@ -41,7 +41,7 @@ export default () => {
 		res.status(200).json({ result: result, message: req.t('exerciseUpdated') });
 	})
 
-	router.delete('/delete', authenticate, authorizeRoles(ROLE_TYPE.ADMIN),validateDeleteExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+	router.delete('/delete', authenticate, authorizeRoles(ROLE_TYPE.ADMIN),validateDeleteExercise, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		// Logic to delete an exercise
 		let result;
 		try {
