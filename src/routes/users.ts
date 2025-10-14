@@ -3,7 +3,6 @@ import { authorizeRoles, authenticate } from '../middlewares/authMiddleware';
 import { ROLE_TYPE } from '../utils/enums';
 import { UserService } from '../services/user';
 import { validateUpdateUser } from '../middlewares/validationMiddleware';
-import { isAdmin } from '../utils/jwt';
 
 const userService = new UserService();
 

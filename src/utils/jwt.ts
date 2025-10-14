@@ -12,14 +12,6 @@ export function generateToken(user: { id: number; email: string; role: string })
   );
 }
 
-export function verifyToken(token: string) {
-  return jwt.verify(token, JWT_SECRET);
-}
-
-export function decodeToken(token: string) {
-  return jwt.decode(token);
-}
-
 export function isAdmin(authHeader: string) {
   const token = authHeader.split(' ')[1];
   const decoded = jwt.decode(token);
