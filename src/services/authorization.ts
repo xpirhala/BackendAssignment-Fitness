@@ -3,6 +3,7 @@ import { UserDbService } from "../db/services/userDbService";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
 
+const HASH_SALT_ROUNDS = parseInt(process.env.HASH_SALT_ROUNDS) ;
 export class AuthorizationService {
     // Implement authorization logic here
 
@@ -10,7 +11,8 @@ export class AuthorizationService {
         // Validate user credentials and return a token
         //compare with hashed password in DB
         const user = await UserDbService.findByEmail(email);
-        if (!user || !bcrypt.compare(password, user.password)) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch){
             throw new Error("Invalid credentials");
         }
         const token = generateToken(user);

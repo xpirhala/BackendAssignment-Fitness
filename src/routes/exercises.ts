@@ -19,24 +19,38 @@ export default () => {
 
 	router.post('/create', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateCreateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
 		// Logic to add a new exercise
-		const result = await exerciseService.createExercise(req.body);
-		res.status(201).json({ message: 'Exercise created' });
+		let result;
+		try {
+		result = await exerciseService.createExercise(req.body);
+		}catch (error) {
+			res.status(400).json({ message: req.t('exercisesCreateError') });
+		}
+
+		res.status(201).json({ result: result, message: req.t('exercisesCreate') });
 	})
 
 	router.put('/update', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), validateUpdateExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
 		// Logic to update an existing exercise
-		const result = await exerciseService.updateExercise(parseInt(req.body.id), req.body);
-		res.json({ message: 'Exercise updated' });
+		let result;
+		try {
+			result = await exerciseService.updateExercise(parseInt(req.body.id), req.body);
+		} catch (error) {
+			res.status(400).json({ message: req.t('exercisesUpdateError') });
+		}
+
+		res.status(200).json({ result: result, message: req.t('exerciseUpdated') });
 	})
 
 	router.delete('/delete', authenticate, authorizeRoles(ROLE_TYPE.ADMIN),validateDeleteExercise, async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
 		// Logic to delete an exercise
-		const result = await exerciseService.deleteExercise(parseInt(req.body.id));
-		if (!result) {
-			res.status(404).json({ message: 'Exercise not found' });
-			return;
+		let result;
+		try {
+			result = await exerciseService.deleteExercise(parseInt(req.body.id));
+		} catch (error) {
+			res.status(400).json({ message: req.t('exercisesDeleteError') });
 		}
-		res.json({ message: 'Exercise deleted' });
+
+		res.status(200).json({ message: req.t('exerciseDeleted') });
 	})
 
 

@@ -10,6 +10,30 @@ import ProfileRouter from './routes/profile'
 /*import TrackingRouter from './routes/tracking'*/
 
 const app = express()
+import i18next from 'i18next';
+import Backend from 'i18next-fs-backend';
+import middleware from 'i18next-http-middleware';
+import { languages } from './utils/enums'
+import { lookup } from 'dns'
+
+i18next
+  .use(Backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: 'en',            // Default language
+    preload: languages,        // Supported languages
+    supportedLngs: languages, // Supported languages
+    backend: {
+      loadPath: './src/locales/{{lng}}/translation.json',  // Path to translations
+    },
+    detection: {
+      order: ['querystring', 'header', 'cookie'],
+      lookupQuerystring: 'lang',   // e.g. ?lang=sk
+      lookupHeader: 'language', // e.g. language: sk
+    },
+  });
+
+app.use(middleware.handle(i18next));
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())

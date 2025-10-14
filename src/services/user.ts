@@ -5,12 +5,13 @@ import bcrypt from "bcrypt";
 import { isAdmin } from "../utils/jwt";
 
 const userDbService = new UserDbService();
+const HASH_SALT_ROUNDS = parseInt(process.env.HASH_SALT_ROUNDS) ;
 
 export class UserService {
     // Implement user-related logic here
     async createUser(data: ICreateUserInterface): Promise<any> {
         // For purpose of this test, we will hash the password with salt rounds of 10        
-        data.password = await bcrypt.hash(data.password, 10);
+        data.password = await bcrypt.hash(data.password, HASH_SALT_ROUNDS);
         const existingUser = await userDbService.createUser(data);
         
 

@@ -7,29 +7,29 @@ import { EXERCISE_DIFFICULTY, ROLE_TYPE } from '../utils/enums';
 export const validateUser = [
   body("email")
     .isEmail()
-    .withMessage("Email must be valid"),
+    .withMessage((value, { req }) => req.t('emailInvalid')),
   body("password")
     .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
+    .withMessage((value, { req }) => req.t('passwordInvalid')),
   body("nickName")
     .optional()
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Nickname must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('nickNameInvalid')),
   body("name")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Name must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('firstNameInvalid')),
   body("surname")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Surname must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('surnameInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },
@@ -38,10 +38,10 @@ export const validateUser = [
 export const validateLogin = [
   body("email")
     .isEmail()
-    .withMessage("Email must be valid"),
+    .withMessage((value, { req }) => req.t('emailInvalid')),
   body("password")
     .isString()
-    .withMessage("Password must be provided"),
+    .withMessage((value, { req }) => req.t('passwordInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
@@ -58,14 +58,14 @@ export const validateCreateExercise = [
   body("name")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Name must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('exerciseNameInvalid')),
   body("difficulty")
     .isString()
     .isIn([EXERCISE_DIFFICULTY.EASY, EXERCISE_DIFFICULTY.MEDIUM, EXERCISE_DIFFICULTY.HARD])
-    .withMessage("Difficulty must be one of the following: easy, medium, hard"),
+    .withMessage((value, { req }) => req.t('exerciseDifficultyInvalid')),
   body("programID")
     .isInt({ gt: 0 })
-    .withMessage("Program ID must be a positive integer"),
+    .withMessage((value, { req }) => req.t('programIDInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
@@ -82,18 +82,18 @@ export const validateCreateExercise = [
 export const validateUpdateExercise = [
   body("id")
     .isInt({ gt: 0 })
-    .withMessage("ID must be a positive integer"),
+    .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
   body("name")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Name must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('exerciseNameInvalid')),
   body("difficulty")
     .isString()
     .isIn([EXERCISE_DIFFICULTY.EASY, EXERCISE_DIFFICULTY.MEDIUM, EXERCISE_DIFFICULTY.HARD])
-    .withMessage("Difficulty must be one of the following: easy, medium, hard"),
+    .withMessage((value, { req }) => req.t('exerciseDifficultyInvalid')),
   body("programID")
     .isInt({ gt: 0 })
-    .withMessage("Program ID must be a positive integer"),
+    .withMessage((value, { req }) => req.t('programIDInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
@@ -108,7 +108,7 @@ export const validateUpdateExercise = [
 export const validateDeleteExercise = [
   body("id")
     .isInt({ gt: 0 })
-    .withMessage("ID must be a positive integer"),
+    .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
@@ -126,25 +126,25 @@ export const validateUpdateUser = [
     .optional()
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Nickname must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('nickNameInvalid')),
   body("name")
     .optional()
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Name must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('firstNameInvalid')),
   body("surname")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Surname must be at least 2 characters"),
+    .withMessage((value, { req }) => req.t('surnameInvalid')),
   body("role")
     .optional()
     .isString()
     .isIn([ROLE_TYPE.ADMIN, ROLE_TYPE.USER])
-    .withMessage("Role must be either ADMIN or USER"),
+    .withMessage((value, { req }) => req.t('roleInvalid')),
   body("birthDate")
     .optional()
     .isDate({ format: 'YYYY-MM-DD' })
-    .withMessage("Birthdate must be a valid date string"),
+    .withMessage((value, { req }) => req.t('birthDateInvalid')),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {

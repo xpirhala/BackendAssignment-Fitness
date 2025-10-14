@@ -30,12 +30,19 @@ export default () => {
     });
 
     router.put('/update/:id', authenticate, authorizeRoles(ROLE_TYPE.ADMIN),validateUpdateUser, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
-        const result = await userService.updateUser(parseInt(req.params.id), req.body);
-        if (!result) {
-            return res.status(404).json({ message: 'User not found or no changes made' });
+        let result;
+        try {
+            result = await userService.updateUser(parseInt(req.params.id), req.body);
+        } catch (error) {
+            return res.status(400).json({ message: req.t('userUpdateError') });
         }
-        res.json(result);
-    });
+
+        if (!result) {
+            return res.status(404).json({ message: req.t('userNotFoundOrNoChanges') });
+        }
+        res.json({ result: result, message: req.t('userUpdated') });
+    }
+    );
 
     return router;
 }

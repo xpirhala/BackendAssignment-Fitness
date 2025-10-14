@@ -11,7 +11,6 @@ import { validateUser, validateLogin } from '../middlewares/validationMiddleware
 import { AuthorizationService } from '../services/authorization'
 import { UserService } from '../services/user'
 
-
 const userService = new UserService();
 const authorizationService = new AuthorizationService();
 
@@ -22,22 +21,29 @@ const {
 } = models
 
 export default () => {
-	router.post('/login', validateLogin,async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
+	router.post('/login', validateLogin,async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		// Login logic here
-		const { email, password } = _req.body;
-		const token = await authorizationService.login(email, password);
-		res.status(200).json({ token });
-		
+		const { email, password } = req.body;
+		let token;
+		try {
+		token = await authorizationService.login(email, password);
+		} catch (error) {
+			return res.status(401).json({ message: req.t('invalidCredentials') });
+		}
+
+		res.status(200).json({ token, message: req.t('successfulLogin') });
+
 	})
 
-    router.post('/logout', async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-		
-	})
-
-    router.post('/register', validateUser,async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
+    router.post('/register', validateUser,async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		// Registration logic here
-		const result = await userService.createUser(_req.body);
-		res.status(201).json(result);
+		let result;
+		try {
+		result = await userService.createUser(req.body);
+		} catch (error) {
+			return res.status(400).json({ message: req.t('userExists') });
+		}
+		res.status(201).json({ message: req.t('userCreated') });
 	})
 
 	return router
