@@ -35,8 +35,7 @@ class UserDbService {
 
     static async findByEmail(email: string): Promise<any> {
         const where = { email };
-        const attributes = ['password']
-        const user = await User.findOne({ where, attributes });
+        const user = await User.findOne({ where });
         return user;
     }
 }

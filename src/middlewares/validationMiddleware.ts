@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
+import { EXERCISE_DIFFICULTY, ROLE_TYPE } from '../utils/enums';
 
 // Example validation using express-validator
 
@@ -41,6 +42,73 @@ export const validateLogin = [
   body("password")
     .isString()
     .withMessage("Password must be provided"),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+
+export const validateCreateExercise = [
+  body("name")
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Name must be at least 2 characters"),
+  body("difficulty")
+    .isString()
+    .isIn([EXERCISE_DIFFICULTY.EASY, EXERCISE_DIFFICULTY.MEDIUM, EXERCISE_DIFFICULTY.HARD])
+    .withMessage("Difficulty must be one of the following: easy, medium, hard"),
+  body("programID")
+    .isInt({ gt: 0 })
+    .withMessage("Program ID must be a positive integer"),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+
+  
+];
+
+export const validateUpdateExercise = [
+  body("id")
+    .isInt({ gt: 0 })
+    .withMessage("ID must be a positive integer"),
+  body("name")
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Name must be at least 2 characters"),
+  body("difficulty")
+    .isString()
+    .isIn([EXERCISE_DIFFICULTY.EASY, EXERCISE_DIFFICULTY.MEDIUM, EXERCISE_DIFFICULTY.HARD])
+    .withMessage("Difficulty must be one of the following: easy, medium, hard"),
+  body("programID")
+    .isInt({ gt: 0 })
+    .withMessage("Program ID must be a positive integer"),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateDeleteExercise = [
+  body("id")
+    .isInt({ gt: 0 })
+    .withMessage("ID must be a positive integer"),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
