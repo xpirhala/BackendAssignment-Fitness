@@ -15,7 +15,7 @@ const programService = new ProgramService();
 
 
 export default () => {
-	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.ADMIN), async (req: Request, res: Response): Promise<any> => {
+	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.USER), async (req: Request, res: Response): Promise<any> => {
 		const result = await programService.getAllPrograms();
 		res.json(result);
 	})

@@ -1,5 +1,6 @@
+import { ENUM } from 'sequelize'
 import { models, sequelize } from './db/models/index'
-import { EXERCISE_DIFFICULTY } from './utils/enums'
+import { EXERCISE_DIFFICULTY, ROLE_TYPE } from './utils/enums'
 
 const {
 	Exercise,
@@ -42,6 +43,14 @@ const seedDB = async () => {
 		name: 'Exercise 6',
 		difficulty: EXERCISE_DIFFICULTY.HARD,
 		programID: 2
+	}])
+
+	await RoleEnum.bulkCreate([{
+		enum: ROLE_TYPE.ADMIN,
+		description: 'Admin role with full permissions'
+	}, {
+		enum: ROLE_TYPE.USER,
+		description: 'Regular user role with limited permissions'
 	}])
 }
 
