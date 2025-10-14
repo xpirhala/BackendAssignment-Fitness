@@ -119,3 +119,39 @@ export const validateDeleteExercise = [
     next();
   },
 ];
+
+
+export const validateUpdateUser = [
+  body("nickName")
+    .optional()
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Nickname must be at least 2 characters"),
+  body("name")
+    .optional()
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Name must be at least 2 characters"),
+  body("surname")
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Surname must be at least 2 characters"),
+  body("role")
+    .optional()
+    .isString()
+    .isIn([ROLE_TYPE.ADMIN, ROLE_TYPE.USER])
+    .withMessage("Role must be either ADMIN or USER"),
+  body("birthDate")
+    .optional()
+    .isDate({ format: 'YYYY-MM-DD' })
+    .withMessage("Birthdate must be a valid date string"),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

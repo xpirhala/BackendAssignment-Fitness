@@ -4,12 +4,14 @@ const { User } = models
 
 class UserDbService {
     async getAllUsers(): Promise<any> {
-        const users = await User.findAll();
+        const exclude = ['password'];
+        const users = await User.findAll({ attributes: { exclude } });
         return users;
     }
 
     async getUserById(id: number): Promise<any> {
-        const user = await User.findByPk(id);
+        const exclude = ['password'];
+        const user = await User.findByPk(id, { attributes: { exclude } });
         return user;
     }
 
@@ -25,12 +27,18 @@ class UserDbService {
             await user.save();
             return user;
         }
-        return null;
+        return user;
     }
 
     async deleteUser(id: number): Promise<boolean> {
         const deletedCount = await User.destroy({ where: { id } });
         return deletedCount > 0;
+    }
+
+    async getAllUsersRestricted(): Promise<any> {
+        const exclude = ['name', 'surname', 'password', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'role', 'birthDate'];
+        const users = await User.findAll({ attributes: { exclude } });
+        return users;
     }
 
     static async findByEmail(email: string): Promise<any> {
