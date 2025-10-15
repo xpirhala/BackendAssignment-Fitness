@@ -64,15 +64,17 @@ class TrackingExerciseDbService {
     }
 
     async deleteTrackingExercise(userId: number, trackingExerciseId: number): Promise<any> {
-        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        
+       const where: WhereOptions = { id: trackingExerciseId, userID: userId, validity: true , deletedAt: { [Op.is]: null }};
+       let result;
         const trackingExercise = await TrackingExercise.findOne({ where: where });
         if (trackingExercise) {
-            //@ts-ignore
-            trackingExercise.deletedAt = new Date();
-            await trackingExercise.save();
-            return trackingExercise;
+
+        result = await TrackingExercise.update({deletedAt: new Date()},{ where: where });
+
+            return result;
         }else{
-            throw new Error('Tracking exercise not found');
+            throw new Error('Tracking exercise not found or already deleted');
         }
     }
 }

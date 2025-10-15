@@ -11,6 +11,7 @@ export interface TrackingExerciseModel extends Model {
     validity: boolean
     durationSeconds: number
     completedAt: Date
+    deletedAt: Date | null
 }
 
 export default (sequelize: Sequelize, modelName: string) => {

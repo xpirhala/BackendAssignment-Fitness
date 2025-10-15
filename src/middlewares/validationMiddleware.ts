@@ -215,7 +215,8 @@ export const validateQueryGetExercises = [
     .isString()
     .withMessage((value, { req }) => req.t('searchInvalid')),
   query('id')
-      .custom((value, { req }) => {
+    .optional()
+    .custom((value, { req }) => {
         const ids = value.split(',').map(Number);
         if (!ids.every(Number.isInteger)) {
           throw new Error(req.t('idInvalid'));

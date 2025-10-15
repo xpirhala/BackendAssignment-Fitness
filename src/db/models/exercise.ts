@@ -7,7 +7,7 @@ export interface ExerciseModel extends Model {
 	id: number
 	difficulty: EXERCISE_DIFFICULTY
 	name: String
-
+	deletedAt: Date | null
 	program: ProgramModel
 }
 

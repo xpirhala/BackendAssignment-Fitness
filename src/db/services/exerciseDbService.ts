@@ -1,3 +1,4 @@
+import { where } from 'sequelize';
 import { models } from '../models/index'
 
 const { Exercise, Program } = models
@@ -30,8 +31,8 @@ class ExerciseDbService {
     }
 
     async deleteExercise(id: number): Promise<any> {
-        const deleted = await Exercise.destroy({ where: { id } });
-        return deleted;
+        let exercise = await Exercise.update({ deletedAt: new Date() }, { where: { id } });
+        return exercise;
     }
 }
 
