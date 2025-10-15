@@ -25,6 +25,8 @@
     "birthDateInvalid": "Birthdate must be a valid date string in format YYYY-MM-DD",
     "userUpdateError": "Uuups, cannot update user",
     "userUpdated": "User has been updated",
-    "userNotFoundOrNoChanges": "User not found or no changes were made"
+    "userNotFoundOrNoChanges": "User not found or no changes were made",
+    "trackingExercisesFetchError": "Uuups, cannot fetch tracking exercises",
+    "trackingExercisesFetched": "Tracking exercises have been fetched"
 
 }

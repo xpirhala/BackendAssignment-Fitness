@@ -1,15 +1,50 @@
 import { models } from '../models/index'
+import { Op, WhereOptions } from 'sequelize';
 
 const { TrackingExercise } = models
 
 class TrackingExerciseDbService {
-    async getAllTrackingExercises(): Promise<any> {
-        const trackingExercises = await TrackingExercise.findAll();
+    
+    async getCompleteTrackingExercises(userId:number): Promise<any> {
+        const where: WhereOptions = { id: userId, completedAt: { [Op.is]: null }, validity: true , deletedAt: { [Op.is]: null }};
+        const trackingExercises = await TrackingExercise.findAll({ where: where });
         return trackingExercises;
     }
 
-    async getTrackingExerciseById(id: number): Promise<any> {
-        const trackingExercise = await TrackingExercise.findByPk(id);
+    async getIncompleteTrackingExercises(userId:number): Promise<any> {
+        const where: WhereOptions = { id: userId, completedAt: { [Op.not]: null }, validity: true , deletedAt: { [Op.is]: null }};
+        const trackingExercises = await TrackingExercise.findAll({ where: where });
+        return trackingExercises;
+    }
+    
+    async getAllTrackingExercises(userId:number): Promise<any> {
+        const where: WhereOptions = { id: userId, validity: true };
+        const trackingExercises = await TrackingExercise.findAll({ where: where });
+        return trackingExercises;
+    }
+
+    async markExerciseComplete(userId: number, trackingExerciseId: number): Promise<any> { 
+        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        const trackingExercise = await TrackingExercise.findOne({ where: where });
+        if (trackingExercise) {
+            trackingExercise.completedAt = new Date();
+            //@ts-ignore
+            trackingExercise.durationSeconds = Math.floor((trackingExercise.completedAt.getTime() - trackingExercise.createdAt.getTime()) / 1000);
+            await trackingExercise.save();
+            return trackingExercise;
+        }
+        return trackingExercise;
+    }
+
+    async markExerciseIncomplete(userId: number, trackingExerciseId: number): Promise<any> {
+        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        const trackingExercise = await TrackingExercise.findOne({ where: where });
+        if (trackingExercise) {
+            trackingExercise.completedAt = null;
+            trackingExercise.durationSeconds = null;
+            await trackingExercise.save();
+            return trackingExercise;
+        }
         return trackingExercise;
     }
 
@@ -28,9 +63,17 @@ class TrackingExerciseDbService {
         return null;
     }
 
-    async deleteTrackingExercise(id: number): Promise<boolean> {
-        const deletedCount = await TrackingExercise.destroy({ where: { id } });
-        return deletedCount > 0;
+    async deleteTrackingExercise(userId: number, trackingExerciseId: number): Promise<any> {
+        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        const trackingExercise = await TrackingExercise.findOne({ where: where });
+        if (trackingExercise) {
+            //@ts-ignore
+            trackingExercise.deletedAt = new Date();
+            await trackingExercise.save();
+            return trackingExercise;
+        }else{
+            throw new Error('Tracking exercise not found');
+        }
     }
 }
 

@@ -47,7 +47,7 @@ export const validateLogin = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },
@@ -71,7 +71,7 @@ export const validateCreateExercise = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },
@@ -99,7 +99,7 @@ export const validateUpdateExercise = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },
@@ -114,7 +114,7 @@ export const validateDeleteExercise = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },
@@ -150,7 +150,52 @@ export const validateUpdateUser = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+    }
+    next();
+  },
+];
+
+export const validateUpdateTrackingExercise = [
+  body("id")
+    .isInt({ gt: 0 })
+    .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+    }
+    next();
+  },
+];
+
+export const validateAddTrackingExercise = [
+  body("exerciseId")
+    .isInt({ gt: 0 })
+    .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+    }
+    next();
+  },
+];
+
+export const validateDeleteTrackingExercise = [
+  body("id")
+    .isInt({ gt: 0 })
+    .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
     }
     next();
   },

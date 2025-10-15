@@ -26,5 +26,7 @@
     "birthDateInvalid": "Datum narodenia musi byt platny datum vo formate YYYY-MM-DD",
     "userUpdateError": "Uuups, nepodarilo sa aktualizovat pouzivatela",
     "userUpdated": "Pouzivatel bol aktualizovany",
-    "userNotFoundOrNoChanges": "Pouzivatel nebol najdeny alebo neboli vykonane ziadne zmeny"
+    "userNotFoundOrNoChanges": "Pouzivatel nebol najdeny alebo neboli vykonane ziadne zmeny",
+    "trackingExercisesFetchError": "Uuups, nepodarilo sa ziskat sledovane cvicenia",
+    "trackingExercisesFetched": "Sledovane cvicenia boli ziskane"
 }
