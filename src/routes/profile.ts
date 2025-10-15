@@ -15,9 +15,9 @@ export default () => {
     router.get('/me', authenticate, authorizeRoles(ROLE_TYPE.USER, ROLE_TYPE.ADMIN), async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
        
     const userId = getUserId(req.headers.authorization);
-    const result = await userService.getUserById(userId);
+    const result = await userService.getMe(userId);
     res.json(result);
     });
-    
+
     return router;
 }

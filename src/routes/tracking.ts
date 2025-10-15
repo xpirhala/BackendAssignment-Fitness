@@ -31,6 +31,7 @@ export default () => {
             result = await trackingExerciseService.getIncompleteExercises(userId);
         } catch (error) {
             res.status(400).json({ message: req.t('trackingExercisesFetchError') });
+            throw error;
         }
         res.status(200).json({ data: result, message: req.t('trackingExercisesFetched') });
         });
@@ -78,9 +79,9 @@ export default () => {
         try{
             result = await trackingExerciseService.createExercise(userId, req.body);
         } catch (error) {
-            res.status(400).json({ message: req.t('trackingExercisesFetchError') });
+            res.status(400).json({ message: req.t('trackingExercisesCreatedError') });
         }
-        res.status(200).json({ data: result, message: req.t('trackingExercisesFetched') });
+        res.status(200).json({ data: result, message: req.t('trackingExercisesCreated') });
     });
 
      router.delete('/exercises/remove', authenticate, authorizeRoles(ROLE_TYPE.USER),validateDeleteTrackingExercise, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {

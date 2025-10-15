@@ -24,8 +24,8 @@ export function isAdmin(authHeader: string) {
 export function getUserId(authHeader: string) {
   const token = authHeader.split(' ')[1];
   const decoded = jwt.decode(token);
-  
-  return decoded.id;
+
+  return parseInt(decoded.id);
 }
 
 

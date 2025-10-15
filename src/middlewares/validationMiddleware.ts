@@ -172,7 +172,7 @@ export const validateUpdateTrackingExercise = [
 ];
 
 export const validateAddTrackingExercise = [
-  body("exerciseId")
+  body("exerciseID")
     .isInt({ gt: 0 })
     .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
   // Handle errors

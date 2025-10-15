@@ -6,25 +6,25 @@ const { TrackingExercise } = models
 class TrackingExerciseDbService {
     
     async getCompleteTrackingExercises(userId:number): Promise<any> {
-        const where: WhereOptions = { id: userId, completedAt: { [Op.is]: null }, validity: true , deletedAt: { [Op.is]: null }};
+        const where: WhereOptions = { userID: userId, completedAt: { [Op.not]: null }, validity: true , deletedAt: { [Op.is]: null }};
         const trackingExercises = await TrackingExercise.findAll({ where: where });
         return trackingExercises;
     }
 
     async getIncompleteTrackingExercises(userId:number): Promise<any> {
-        const where: WhereOptions = { id: userId, completedAt: { [Op.not]: null }, validity: true , deletedAt: { [Op.is]: null }};
+        const where: WhereOptions = { userID: userId, completedAt: { [Op.is]: null }, deletedAt: { [Op.is]: null }};
         const trackingExercises = await TrackingExercise.findAll({ where: where });
         return trackingExercises;
     }
     
     async getAllTrackingExercises(userId:number): Promise<any> {
-        const where: WhereOptions = { id: userId, validity: true };
+        const where: WhereOptions = { userID: userId, validity: true };
         const trackingExercises = await TrackingExercise.findAll({ where: where });
         return trackingExercises;
     }
 
     async markExerciseComplete(userId: number, trackingExerciseId: number): Promise<any> { 
-        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        const where: WhereOptions = { id: trackingExerciseId, userID: userId, validity: true , deletedAt: { [Op.is]: null }};
         const trackingExercise = await TrackingExercise.findOne({ where: where });
         if (trackingExercise) {
             trackingExercise.completedAt = new Date();
@@ -37,7 +37,7 @@ class TrackingExerciseDbService {
     }
 
     async markExerciseIncomplete(userId: number, trackingExerciseId: number): Promise<any> {
-        const where: WhereOptions = { id: trackingExerciseId, userId: userId, validity: true , deletedAt: { [Op.is]: null }};
+        const where: WhereOptions = { id: trackingExerciseId, userID: userId, validity: true , deletedAt: { [Op.is]: null }};
         const trackingExercise = await TrackingExercise.findOne({ where: where });
         if (trackingExercise) {
             trackingExercise.completedAt = null;

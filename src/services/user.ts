@@ -29,9 +29,31 @@ export class UserService {
         return {users: users};
     }
 
-    async getUserById(id: number): Promise<any> {
+    async getUserById(actualUserId:number,id: number, authHeader: string): Promise<any> {
         // Fetch and return a user by ID from the database
-        const user = await userDbService.getUserById(id);
+        let user;if (isAdmin(authHeader)) {
+            user = await userDbService.getUserById(id);
+        } else {
+        if(actualUserId!==id){
+            throw new Error('Unauthorized access');
+        }
+        try{
+            user = await userDbService.getUserById(id);
+        }catch (error) {
+            throw new Error('User not found');
+        }
+    }
+        return user;
+    }
+
+    async getMe(id: number): Promise<any> {
+        // Fetch and return a user by ID from the database
+        let user;
+        try{
+            user = await userDbService.getUserById(id);
+        }catch (error) {
+            throw new Error('User not found');
+        }
         return user;
     }
 

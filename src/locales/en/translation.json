@@ -27,6 +27,9 @@
     "userUpdated": "User has been updated",
     "userNotFoundOrNoChanges": "User not found or no changes were made",
     "trackingExercisesFetchError": "Uuups, cannot fetch tracking exercises",
-    "trackingExercisesFetched": "Tracking exercises have been fetched"
+    "trackingExercisesFetched": "Tracking exercises have been fetched",
+    "userNotFound": "User not found",
+    "trackingExercisesCreatedError": "Uuups, cannot create tracking exercise",
+    "trackingExercisesCreated": "Tracking exercise has been created"
 
 }

@@ -7,13 +7,16 @@ import ExerciseRouter from './routes/exercises'
 import AuthorizationRouter from './routes/authorization'
 import UserRouter from './routes/users'
 import ProfileRouter from './routes/profile'
-/*import TrackingRouter from './routes/tracking'*/
+import TrackingRouter from './routes/tracking'
 
 const app = express()
+
+
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
 import middleware from 'i18next-http-middleware';
 import { languages } from './utils/enums'
+
 
 i18next
   .use(Backend)
@@ -32,7 +35,7 @@ i18next
     },
   });
 
-app.use(middleware.handle(i18next));
+app.use(middleware.handle(  i18next));
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -41,7 +44,7 @@ app.use('/exercises', ExerciseRouter())
 app.use('/auth', AuthorizationRouter())
 app.use('/users', UserRouter())
 app.use('/profile', ProfileRouter())
-/*app.use('/tracking', TrackingRouter())*/
+app.use('/tracking', TrackingRouter())
 
 const httpServer = http.createServer(app)
 

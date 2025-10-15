@@ -28,5 +28,8 @@
     "userUpdated": "Pouzivatel bol aktualizovany",
     "userNotFoundOrNoChanges": "Pouzivatel nebol najdeny alebo neboli vykonane ziadne zmeny",
     "trackingExercisesFetchError": "Uuups, nepodarilo sa ziskat sledovane cvicenia",
-    "trackingExercisesFetched": "Sledovane cvicenia boli ziskane"
+    "trackingExercisesFetched": "Sledovane cvicenia boli ziskane",
+    "userNotFound": "Pouzivatel nebol najdeny",
+    "trackingExercisesCreatedError": "Uuups, nepodarilo sa vytvorit sledovane cvicenie",
+    "trackingExercisesCreated": "Sledovane cvicenie bolo vytvorene"
 }
