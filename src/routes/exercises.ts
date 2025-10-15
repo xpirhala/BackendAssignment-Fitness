@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { ExerciseService } from '../services/exercise'
 import { ROLE_TYPE } from '../utils/enums';
 import { authenticate, authorizeRoles } from '../middlewares/authMiddleware'
-import { validateCreateExercise, validateDeleteExercise, validateUpdateExercise } from '../middlewares/validationMiddleware';
+import { validateCreateExercise, validateDeleteExercise, validateQueryGetExercises, validateUpdateExercise } from '../middlewares/validationMiddleware';
 
 
 const exerciseService = new ExerciseService();
@@ -12,8 +12,11 @@ const router = Router()
 
 
 export default () => {
-	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.ADMIN,ROLE_TYPE.USER),async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-		const result = await exerciseService.getAllExercises();
+	router.get('/', authenticate, authorizeRoles(ROLE_TYPE.ADMIN,ROLE_TYPE.USER),validateQueryGetExercises, async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+		
+
+		
+		const result = await exerciseService.getAllExercises(req.query);
 		res.json(result);
 	})
 

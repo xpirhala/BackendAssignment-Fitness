@@ -30,6 +30,10 @@
     "trackingExercisesFetched": "Tracking exercises have been fetched",
     "userNotFound": "User not found",
     "trackingExercisesCreatedError": "Uuups, cannot create tracking exercise",
-    "trackingExercisesCreated": "Tracking exercise has been created"
+    "trackingExercisesCreated": "Tracking exercise has been created",
+    "pageInvalid": "Page must be a positive integer",
+    "limitInvalid": "Limit must be a positive integer",
+    "searchInvalid": "Search must be a string",
+    "idInvalid": "IDs must be a comma-separated list of positive integers"
 
 }

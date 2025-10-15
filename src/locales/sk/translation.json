@@ -31,5 +31,9 @@
     "trackingExercisesFetched": "Sledovane cvicenia boli ziskane",
     "userNotFound": "Pouzivatel nebol najdeny",
     "trackingExercisesCreatedError": "Uuups, nepodarilo sa vytvorit sledovane cvicenie",
-    "trackingExercisesCreated": "Sledovane cvicenie bolo vytvorene"
+    "trackingExercisesCreated": "Sledovane cvicenie bolo vytvorene",
+    "pageInvalid": "Strana musi byt kladne cele cislo",
+    "limitInvalid": "Limit musi byt kladne cele cislo",
+    "searchInvalid": "Hladanie musi byt retazec",
+    "idInvalid": "ID musia byt zoznam kladnych celych cisel oddelenych ciarkou"
 }

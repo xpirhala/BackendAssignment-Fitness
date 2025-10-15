@@ -23,6 +23,5 @@ interface iExerciseGetAll {
 
 interface iExerciseGetAllService {
     data: iExerciseGetAll[];
-    message: string;
 }
 export { iExerciseGetAll, iExerciseGetAllService };

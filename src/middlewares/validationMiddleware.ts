@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body, query, validationResult } from 'express-validator';
 import { EXERCISE_DIFFICULTY, ROLE_TYPE } from '../utils/enums';
 
 // Example validation using express-validator
@@ -190,6 +190,39 @@ export const validateDeleteTrackingExercise = [
   body("id")
     .isInt({ gt: 0 })
     .withMessage((value, { req }) => req.t('exerciseIDInvalid')),
+  // Handle errors
+  //@ts-ignore
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+    }
+    next();
+  },
+];
+
+export const validateQueryGetExercises = [
+  query("page")
+    .optional()
+    .isInt({ gt: 0 })
+    .withMessage((value, { req }) => req.t('pageInvalid')),
+  query("limit")
+    .optional()
+    .isInt({ gt: 0 })
+    .withMessage((value, { req }) => req.t('limitInvalid')),
+  query("search")
+    .optional()
+    .isString()
+    .withMessage((value, { req }) => req.t('searchInvalid')),
+  query('id')
+      .custom((value, { req }) => {
+        const ids = value.split(',').map(Number);
+        if (!ids.every(Number.isInteger)) {
+          throw new Error(req.t('idInvalid'));
+        }
+        req.ids = ids; // store parsed IDs for later use
+        return true;
+      }),
   // Handle errors
   //@ts-ignore
   (req, res, next) => {
